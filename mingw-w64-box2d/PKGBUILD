@@ -3,7 +3,7 @@
 _realname=box2d
 pkgbase=mingw-w64-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
-pkgver=2.4.2
+pkgver=3.0.0
 pkgrel=1
 pkgdesc="2D rigid body simulation library for games (mingw-w64)"
 arch=('any')
@@ -14,9 +14,10 @@ depends=("${MINGW_PACKAGE_PREFIX}-gcc-libs")
 makedepends=("${MINGW_PACKAGE_PREFIX}-cc"
              "${MINGW_PACKAGE_PREFIX}-cmake"
              "${MINGW_PACKAGE_PREFIX}-ninja"
-             "${MINGW_PACKAGE_PREFIX}-doxygen")
+             "${MINGW_PACKAGE_PREFIX}-doxygen"
+             "${MINGW_PACKAGE_PREFIX}-graphviz")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/erincatto/Box2D/archive/v${pkgver}.tar.gz)
-sha256sums=('85b9b104d256c985e6e244b4227d447897fac429071cc114e5cc819dae848852')
+sha256sums=('64ad759006cd2377c99367f51fb36942b57f0e9ad690ed41548dd620e6f6c8b1')
 options=(staticlibs !buildflags !strip)
 
 build() {
@@ -29,9 +30,9 @@ build() {
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=${MINGW_PREFIX} \
     -DBUILD_SHARED_LIBS=ON \
-    -DBOX2D_BUILD_DOCS=ON \
-    -DBOX2D_BUILD_TESTBED=OFF \
-    -DBOX2D_BUILD_UNIT_TESTS=OFF \
+    -DBOX2D_DOCS=ON \
+    -DBOX2D_SAMPLES=OFF \
+    -DBOX2D_UNIT_TESTS=OFF \
     ../${_realname}-${pkgver}/
 
   ${MINGW_PREFIX}/bin/cmake.exe --build .
@@ -45,9 +46,9 @@ build() {
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=${MINGW_PREFIX} \
     -DBUILD_SHARED_LIBS=OFF \
-    -DBOX2D_BUILD_DOCS=OFF \
-    -DBOX2D_BUILD_TESTBED=OFF \
-    -DBOX2D_BUILD_UNIT_TESTS=OFF \
+    -DBOX2D_DOCS=OFF \
+    -DBOX2D_SAMPLES=OFF \
+    -DBOX2D_UNIT_TESTS=OFF \
     ../${_realname}-${pkgver}/
 
   ${MINGW_PREFIX}/bin/cmake.exe --build .
